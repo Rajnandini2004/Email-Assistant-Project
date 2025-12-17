@@ -1,5 +1,6 @@
-package com.email.writer;
+package com.email.writer.service;
 
+import com.email.writer.model.EmailRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.stereotype.Service;
