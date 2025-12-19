@@ -1,6 +1,9 @@
 package com.email.writer.service;
 
 import com.email.writer.model.EmailRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.stereotype.Service;
@@ -50,7 +53,27 @@ public class EmailGeneratorService {
 
 
         // Extract Response
+        return extractResponseContent(response);
     }
+
+    private String extractResponseContent(String response) {
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(response);
+             return root.path("candidates")
+                    .get(0)
+                    .path("content")
+                    .path("parts")
+                    .get(0)
+                    .path("text")
+                    .asText();
+
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private String buildPrompt(EmailRequest emailRequest){
         StringBuilder prompt = new StringBuilder();
         prompt.append("Generate a professional email reply for thr following email:");
