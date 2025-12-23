@@ -17,8 +17,10 @@ function App() {
           emailContent,
           tone
         });
-        setGeneratedReply(typeof response.data === 'string' ?
-          response.data : JSON.stringify(response.data)
+        setGenerateReply(
+          typeof response.data === 'string' 
+          ? response.data 
+          : JSON.stringify(response.data)
         );
       } catch (error) {
         
@@ -73,7 +75,7 @@ function App() {
         rows={6}
         variant='outlined'
         value={generateReply || ''}
-        inputProps={{readonly: true}}
+        inputProps={{readOnly: true}}
         sx={{mb:2}}
         />
 
